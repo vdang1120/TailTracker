@@ -27,7 +27,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <button
                   onClick={() => setIsSearchModalOpen(true)}
-                  className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium text-lg"
+                  className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium text-lg cursor-pointer"
                 >
                   Search Pets
                 </button>
