@@ -11,7 +11,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-md relative">
+    <header className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center h-20">
           {/* Logo and Brand */}
