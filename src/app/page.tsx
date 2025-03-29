@@ -9,10 +9,10 @@ export default function Home() {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   return (
-    <main className="min-h-screen">
+    <main className="">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50">
-        <div className="container mx-auto px-12 py-16 md:py-24">
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 border-b border-gray-200">
+        <div className="container mx-auto px-12 pt-24">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="text-center md:text-left">
@@ -25,23 +25,29 @@ export default function Home() {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <button 
+                <button
                   onClick={() => setIsSearchModalOpen(true)}
-                  className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium text-lg"
+                  className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium text-lg cursor-pointer"
                 >
                   Search Pets
                 </button>
               </div>
             </div>
-            
+
             {/* Right Content - Hero Image */}
-            <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[400px] md:h-[500px] rounded-t-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/images/Beau.png"
+                alt="Beau"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section
+      {/* Unnecessary */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-blue-900 mb-12">How TailTracker Works</h2>
@@ -69,9 +75,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      */}
 
-      {/* CTA Section */}
+      {/* Unnecessary 2
       <section className="bg-blue-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Find Your Pet?</h2>
@@ -86,9 +91,10 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      */}
 
       {/* Search Modal */}
-      <SearchModal 
+      <SearchModal
         isOpen={isSearchModalOpen}
         onClose={() => setIsSearchModalOpen(false)}
       />
