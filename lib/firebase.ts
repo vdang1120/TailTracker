@@ -1,6 +1,6 @@
 // firebase.ts (or firebase.js)
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, listAll, StorageReference } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,14 +19,53 @@ const storage = getStorage(app);
 
 // Function to upload an image to Firebase Storage
 export const uploadImage = async (file: File) => {
-  const storageRef = ref(storage, 'images/' + file.name); // Firebase Storage path
-  await uploadBytes(storageRef, file); // Upload file to Firebase Storage
-  const downloadURL = await getDownloadURL(storageRef); // Get the download URL of the uploaded file
-  console.log('File available at', downloadURL); // Log the URL for debugging
-  return downloadURL; // Return the download URL
+  try {
+    // Create a unique filename to avoid conflicts
+    const timestamp = Date.now();
+    const uniqueFilename = `${timestamp}_${file.name}`;
+    
+    const storageRef = ref(storage, 'images/' + uniqueFilename);
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+    console.log('File uploaded successfully:', downloadURL);
+    return downloadURL;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw new Error('Failed to upload image. Please try again.');
+  }
 };
 
 export const fetchFirebaseImages = async () => {
-  
-}
+  try {
+    const imagesRef = ref(storage, 'images/');
+    const result = await listAll(imagesRef);
+    console.log('Found items in storage:', result.items.length);
+    
+    // Get download URLs for all images
+    const urls = await Promise.all(
+      result.items.map(async (item: StorageReference) => {
+        try {
+          const url = await getDownloadURL(item);
+          // Add cache-busting parameter properly
+          const urlWithCache = url.includes('?') 
+            ? `${url}&t=${Date.now()}`
+            : `${url}?t=${Date.now()}`;
+          console.log('Successfully fetched URL for:', item.name);
+          return urlWithCache;
+        } catch (error) {
+          console.error('Error getting download URL for:', item.name, error);
+          return null;
+        }
+      })
+    );
+
+    // Filter out any failed URLs
+    const validUrls = urls.filter((url): url is string => url !== null);
+    console.log('Successfully fetched URLs:', validUrls.length);
+    return validUrls;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    return [];
+  }
+};
 
