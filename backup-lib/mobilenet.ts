@@ -13,4 +13,5 @@ export const extractFeatures = async (imgElement: HTMLImageElement) => {
   const tensor = tf.browser.fromPixels(imgElement).toFloat();
   const features = model.infer(tensor, true); // Get feature embeddings
   return features;
-};
+};     
+
