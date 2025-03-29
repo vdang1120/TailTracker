@@ -1,7 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import SearchModal from '@/components/SearchModal';
 
 export default function Home() {
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -19,12 +25,12 @@ export default function Home() {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Link 
-                  href="/search"
+                <button 
+                  onClick={() => setIsSearchModalOpen(true)}
                   className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium text-lg"
                 >
                   Search Pets
-                </Link>
+                </button>
               </div>
             </div>
             
@@ -80,6 +86,12 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* Search Modal */}
+      <SearchModal 
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+      />
     </main>
   );
 }
